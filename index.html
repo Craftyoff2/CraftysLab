@@ -7,14 +7,46 @@
     <h2 class="h2_projectstxt">Here i will be posting all my projects</h2>
     </Head>
 
-    <h1 class="Category_Discord_Bots">------------------------------------------------------------------Discord Bots----------------------------------------------------------------</h1>
+    <h1 class="Category_Discord_Bots">--------------------------------------------------Discord Bots--------------------------------------------------</h1>
              <div class="Discord_Bot_Arnost_invite_link_div">
     <button class="Discord_Bot_Arnost_invite_link" onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1405925110191489104&permissions=8&integration_type=0&scope=bot+applications.commands'">Arnošt Invite</button>
-     <br>
-                <h3 class="DBAILD">Bot for discord, Catch creatures with typing /Catch, for information about commands type command /help or /helpadmin</h3>
+    <h3 class="DBAILD">Bot for discord, Catch creatures with typing /Catch, for information about commands type command /help or /helpadmin</h3>
              </div>
+                 <h1 class="Category_Discord_Servers">------------------------------------------------Discord Servers------------------------------------------------</h1>
+                         <div class="Discord_Debatni_Denik_Server_invite_link_div">
+        <button class="Discord_Debatni_Denik_Server_invite_link" onclick="window.location.href='https://discord.com/oauth2/authorize?client_id=1405925110191489104&permissions=8&integration_type=0&scope=bot+applications.commands'">Debatní Deník Server Invite</button>
+        <h3 class="DDDSILD">CZ/SK Discussion server about everything, also English and Global Channels are here 
+            <br> ↓ Rules Here ↓</h3>
+        <div class="arrow-toggle" id="dd-arrow" onclick="toggleRules()">
+            <span class="arrow-icon" id="arrow-icon">&#9660;</span>
+        </div>
+        <div class="server-rules" id="dd-rules">
+            <div class="rules-content">
+                <h3>📜・PRAVIDLA SERVERU</h3>
+<br>────────────────────────────
+<br>🎉 Vítej na našem serveru! 🌟
+<br>Před vstupem si prosím přečti pravidla, abychom tu všichni měli příjemné prostředí. 🤝
+<br>
+<br>────────────────────────────
+<br>🔞 1. Žádné dětské porno! 🚫
+<br>────────────────────────────
+<br>💬 2. Žádný spam na serveru!
+<br>────────────────────────────
+<br>🛑 3. Nežebrej o moderátora ani větší práva!
+<br>────────────────────────────
+<br>📢 4. Žádná reklama na jiné servery (pouze po domluvě s MAJTELI )
+<br>────────────────────────────
+<br>🌐 5. Žádná reklama na weby a sociální sítě (také jen po domluvě s MAJTELI )
+<br>────────────────────────────
+<br>💡 Tip: Pokud máš jakékoliv otázky, neváhej se obrátit na Moderátory nebo Majitele serveru.
+                </ol>
+            </div>
+        </div>
+                         </div>
                        <h1 class="nty">more will be added later..</h1>
-                   <div class="Lower_Credits_Bar">
+    <Body>
+        <br><br><br>
+        <div class="Lower_Credits_Bar">
          <div class="Social">
         <h1>Social</h1>
     <Button class="Youtube" onclick="window.location.href='https://youtube.com/@craftyz__?si=gosihPRrETucF7Ar'">Youtube</Button>
@@ -26,6 +58,18 @@
         <br>
         Made by Crafty Official</h3> 
         </div>
-    <Body>
-    </Body>
+        <script>
+            function toggleRules() {
+                const rules = document.getElementById('dd-rules');
+                const arrow = document.getElementById('arrow-icon');
+                if (rules.classList.contains('open')) {
+                    rules.classList.remove('open');
+                    arrow.style.transform = 'rotate(0deg)';
+                } else {
+                    rules.classList.add('open');
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            }
+        </script>
+        </Body>
     </html>
