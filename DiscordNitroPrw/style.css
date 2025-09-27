@@ -10,6 +10,9 @@ body {
   min-height: 100vh;
   overflow-y: auto; /* allows scrolling if content overflows */
 }
+.DNPP {
+  scale: 1.2;
+}
 
 .profile-card {
   width: 300px; /* fixed width to avoid squish */
@@ -40,6 +43,15 @@ body {
 
 .profile-info {
   padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.username-wrapper {
+  display: flex;
+  flex-wrap: wrap; /* allows badges to wrap under username */
+  align-items: center;
+  gap: 4px;
 }
 
 .username {
@@ -56,16 +68,12 @@ body {
 .badges {
   margin: 8px 0;
 }
-
 .badge {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: var(--accent-color, #5865f2);
+  width: 25px;      /* uniform for all badges */
+  height: 25px;
   border-radius: 4px;
-  margin-right: 4px;
+  object-fit: contain; /* keeps big images proportionate */
 }
-
 .link {
   font-size: 0.85em;
   color: #00aff4;
@@ -152,4 +160,22 @@ body {
   flex-direction: column;
   gap: 6px;
   align-items: center;
+}
+.badges-panel {
+  background-color: #2b2d31;
+  border-radius: 10px;
+  padding: 10px;
+}
+.badges-panel select option img {
+  width: 16px;    /* match other options */
+  height: 16px;
+  vertical-align: middle;
+  object-fit: contain;
+  margin-right: 4px;
+}
+.badges-panel select {
+  height: 24px;
+}
+.nitrobg {
+  width: 25px;
 }
