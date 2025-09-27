@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discord Profile Mockup</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Profile Card -->
+  <div class="profile-card" id="profileCard">
+    <div class="banner" id="banner"></div>
+    <img class="avatar" id="avatar" src="../CLab_Imges/Discord.png" alt="Avatar">
+    <div class="profile-info">
+      <div class="username" id="username">DiscordUser1</div>
+      <div class="tagline" id="bio">Discord Users Bio Here (Space for bio)</div>
+      <div class="badges" id="displayBadges"></div>
+      <a class="link" href="#" id="profileLink">https://craftyoff2.github.io/CraftysLab/</a>
+      <div class="activity">
+        <img src="../CLab_Imges/CLab_Logo_Full.png" alt="Game" class="activity-icon">
+        Playing <b>CLab</b> <span id="timer">0:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controls -->
+  <div class="controls">
+
+    <!-- Banner & Avatar Upload -->
+    <label>
+      <input type="file" id="bannerUpload" accept="image/*">
+      <button>Add Banner</button>
+    </label>
+    <label>
+      <input type="file" id="avatarUpload" accept="image/*">
+      <button>Add Profile Picture</button>
+    </label>
+
+    <!-- Text Inputs -->
+    <div class="text-controls">
+      <input type="text" id="usernameInput" placeholder="Enter your name">
+      <textarea id="bioInput" placeholder="Enter your bio"></textarea>
+    </div>
+
+    <!-- Theme Controls -->
+    <div class="theme-controls">
+      <label>Primary Color: <input type="color" id="primaryColor" value="#6b0c5b"></label>
+      <label>Accent Color: <input type="color" id="accentColor" value="#072cd3"></label>
+      <button id="toggleTheme">Toggle Theme</button>
+    </div>
+
+    <!-- Link Toggle -->
+    <button id="toggleLink">Hide/Show Profile Link</button>
+
+    <!-- Badges Panel -->
+    <div class="badges-panel">
+      <h3>Select Badges:</h3>
+
+      <!-- Early Supporter Badge -->
+      <div class="badge-option">
+        <img src="badges/early_supporter.png" alt="Early Supporter">
+        <label>
+          <input type="checkbox" class="badge-checkbox" data-badge="early_supporter">
+          Early Supporter
+        </label>
+      </div>
+
+      <!-- Nitro Badge -->
+      <div class="badge-option">
+        <img src="badges/nitro_classic.png" alt="Nitro">
+        <label>
+          <input type="checkbox" class="badge-checkbox" data-badge="nitro"> Nitro
+          <select class="nitro-select">
+            <option value="classic">Classic</option>
+            <option value="boost">Boost</option>
+            <option value="premium">Premium</option>
+          </select>
+        </label>
+      </div>
+
+      <!-- Add more badges here -->
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
