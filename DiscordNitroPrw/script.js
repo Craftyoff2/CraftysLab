@@ -1,181 +1,182 @@
-body {
-  background-color: #1e1f22;
-  font-family: "Segoe UI", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 20px;
-  color: white;
-  min-height: 100vh;
-  overflow-y: auto; /* allows scrolling if content overflows */
-}
-.DNPP {
-  scale: 1.2;
-}
+// Default state
+let themeEnabled = true;
 
-.profile-card {
-  width: 300px; /* fixed width to avoid squish */
-  background: linear-gradient(to bottom, var(--primary-color, #2b2d31), var(--accent-color, #2b2d31));
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 15px rgba(0,0,0,0.4);
-  margin-bottom: 20px;
-  transition: background 0.3s ease;
-}
+// ---------- Banner & Avatar Upload ----------
+document.getElementById("bannerButton").addEventListener("click", () => {
+  document.getElementById("bannerUpload").click();
+});
+document.getElementById("avatarButton").addEventListener("click", () => {
+  document.getElementById("avatarUpload").click();
+});
 
-.banner {
-  height: 70px;
-  background: rgb(30, 144, 210);
-  background-size: cover;
-  background-position: center;
-}
+document.getElementById("bannerUpload").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => {
+      document.getElementById("banner").style.backgroundImage = `url(${e.target.result})`;
+    };
+    reader.readAsDataURL(file);
+  }
+});
 
-.avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  border: 5px solid var(--primary-color, #2b2d31);
-  margin-top: -40px;
-  margin-left: 15px;
-  object-fit: cover;
-}
+document.getElementById("avatarUpload").addEventListener("change", function(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = e => document.getElementById("avatar").src = e.target.result;
+    reader.readAsDataURL(file);
+  }
+});
 
-.profile-info {
-  padding: 10px 15px;
-  display: flex;
-  flex-direction: column;
-}
+// ---------- Username & Bio ----------
+document.getElementById("usernameInput").addEventListener("input", function(event) {
+  document.getElementById("username").textContent = event.target.value || "Crafty";
+});
+document.getElementById("bioInput").addEventListener("input", function(event) {
+  document.getElementById("bio").textContent = event.target.value || "Ineedalittleroomtobreathe...";
+});
 
-.username-wrapper {
-  display: flex;
-  flex-wrap: wrap; /* allows badges to wrap under username */
-  align-items: center;
-  gap: 4px;
-}
+// ---------- Theme Color ----------
+document.getElementById("primaryColor").addEventListener("input", function(e) {
+  if (themeEnabled) document.documentElement.style.setProperty("--primary-color", e.target.value);
+});
+document.getElementById("accentColor").addEventListener("input", function(e) {
+  if (themeEnabled) document.documentElement.style.setProperty("--accent-color", e.target.value);
+});
+document.getElementById("toggleTheme").addEventListener("click", function() {
+  themeEnabled = !themeEnabled;
+  if (!themeEnabled) {
+    document.documentElement.style.removeProperty("--primary-color");
+    document.documentElement.style.removeProperty("--accent-color");
+  } else {
+    document.documentElement.style.setProperty("--primary-color", document.getElementById("primaryColor").value);
+    document.documentElement.style.setProperty("--accent-color", document.getElementById("accentColor").value);
+  }
+});
 
-.username {
-  font-size: 1.3em;
-  font-weight: bold;
+// ---------- Timer ----------
+let seconds = 0;
+function updateTimer() {
+  seconds++;
+  let mins = Math.floor(seconds / 60);
+  let secs = seconds % 60;
+  document.getElementById("timer").textContent = `${mins}:${secs.toString().padStart(2,"0")}`;
 }
+setInterval(updateTimer, 1000);
 
-.tagline {
-  font-size: 0.85em;
-  color: #b9bbbe;
-  margin: 4px 0;
-}
+// ---------- Link Toggle ----------
+document.getElementById("toggleLink").addEventListener("click", () => {
+  const link = document.getElementById("profileLink");
+  link.style.display = link.style.display === "none" ? "inline" : "none";
+});
 
-.badges {
-  margin: 8px 0;
-}
-.badge {
-  width: 25px;      /* uniform for all badges */
-  height: 25px;
-  border-radius: 4px;
-  object-fit: contain; /* keeps big images proportionate */
-}
-.link {
-  font-size: 0.85em;
-  color: #00aff4;
-  text-decoration: none;
-}
+// ---------- Badges ----------
+const badgeCheckboxes = document.querySelectorAll(".badge-checkbox");
 
-.activity {
-  margin-top: 10px;
-  background-color: #232428;
-  border-radius: 8px;
-  padding: 8px;
-  font-size: 0.85em;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
+badgeCheckboxes.forEach(checkbox => {
+  checkbox.addEventListener("change", () => {
+    const display = document.getElementById("displayBadges");
+    const badgeName = checkbox.dataset.badge;
 
-.activity-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 4px;
-}
+    // Remove existing badge if unchecked
+    const existingBadge = document.getElementById(`badge-${badgeName}`);
+    if (!checkbox.checked && existingBadge) {
+      existingBadge.remove();
+      return;
+    }
 
-.activity span {
-  color: #23a55a;
-}
+    // Determine image source
+    let imgSrc = `badges/${badgeName}.png`;
 
-/* Wrap profile and controls to prevent squishing */
-.controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 320px; /* ensures controls don’t push profile card */
-}
+    if (badgeName === "nitro") {
+      const version = checkbox.parentElement.querySelector(".nitro-select").value;
+      imgSrc = `badges/nitro_${version}.png`;
+    } else if (badgeName === "server_boost") {
+      const version = checkbox.parentElement.querySelector(".serverboost-select").value;
+      imgSrc = `badges/server_boost_${version}.png`;
+    } else if (badgeName === "bug_hunter") {
+      const version = checkbox.parentElement.querySelector(".bughunter-select").value;
+      imgSrc = `badges/bug_hunter_${version}.png`;
+    } else if (badgeName === "hypesquad") {
+      const version = checkbox.parentElement.querySelector(".hypesquad-select").value;
+      imgSrc = `badges/hypesquad_${version}.png`;
+    }
 
-.controls label {
-  margin: 5px 0;
-}
+    // Add badge if checked
+    if (checkbox.checked && !existingBadge) {
+      const img = document.createElement("img");
+      img.id = `badge-${badgeName}`;
+      img.className = "badge";
 
-.controls input[type="file"] {
-  display: none;
-}
+      // Ensure large images scale down
+      img.style.width = "25px";
+      img.style.height = "25px";
+      img.style.objectFit = "contain";
 
-.controls button {
-  background-color: #5865f2;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  cursor: pointer;
-  font-size: 0.9em;
-}
+      // Fallback if image not found
+      img.onerror = () => {
+        img.src = "badges/missing.png"; // optional: generic missing badge
+      };
 
-.controls button:hover {
-  background-color: #4752c4;
-}
+      img.src = imgSrc;
+      display.appendChild(img);
+    }
+  });
+});
 
-.text-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 250px;
-}
+// ---------- Nitro Select Update ----------
+const nitroSelects = document.querySelectorAll(".nitro-select");
+nitroSelects.forEach(select => {
+  select.addEventListener("change", () => {
+    const badge = document.getElementById("badge-nitro");
+    if (badge) {
+      const version = select.value;
+      badge.src = `badges/nitro_${version}.png`;
+      badge.style.width = "25px";
+      badge.style.height = "25px";
+    }
+  });
+});
 
-.text-controls input,
-.text-controls textarea {
-  width: 100%;
-  padding: 6px;
-  border-radius: 6px;
-  border: none;
-  font-size: 0.9em;
-  font-family: "Segoe UI", sans-serif;
-}
+// ---------- Server Boost Select Update ----------
+const serverBoostSelects = document.querySelectorAll(".serverboost-select");
+serverBoostSelects.forEach(select => {
+  select.addEventListener("change", () => {
+    const badge = document.getElementById("badge-server_boost");
+    if (badge) {
+      const version = select.value;
+      badge.src = `badges/server_boost_${version}.png`;
+      badge.style.width = "25px";
+      badge.style.height = "25px";
+    }
+  });
+});
 
-.text-controls textarea {
-  resize: none;
-  height: 60px;
-}
+// ---------- Bug Hunter Select Update ----------
+const bugHunterSelects = document.querySelectorAll(".bughunter-select");
+bugHunterSelects.forEach(select => {
+  select.addEventListener("change", () => {
+    const badge = document.getElementById("badge-bug_hunter");
+    if (badge) {
+      const version = select.value;
+      badge.src = `badges/bug_hunter_${version}.png`;
+      badge.style.width = "25px";
+      badge.style.height = "25px";
+    }
+  });
+});
 
-.theme-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  align-items: center;
-}
-.badges-panel {
-  background-color: #2b2d31;
-  border-radius: 10px;
-  padding: 10px;
-}
-.badges-panel select option img {
-  width: 16px;    /* match other options */
-  height: 16px;
-  vertical-align: middle;
-  object-fit: contain;
-  margin-right: 4px;
-}
-.badges-panel select {
-  height: 24px;
-}
-.nitrobg {
-  width: 25px;
-}
+// ---------- HypeSquad Select Update ----------
+const hypeSquadSelects = document.querySelectorAll(".hypesquad-select");
+hypeSquadSelects.forEach(select => {
+  select.addEventListener("change", () => {
+    const badge = document.getElementById("badge-hypesquad");
+    if (badge) {
+      const version = select.value;
+      badge.src = `badges/hypesquad_${version}.png`;
+      badge.style.width = "25px";
+      badge.style.height = "25px";
+    }
+  });
+});
