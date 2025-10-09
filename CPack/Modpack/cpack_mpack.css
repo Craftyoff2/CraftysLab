@@ -235,3 +235,11 @@ body {
 .screenshot-carousel .arrow:hover {
   background: rgba(255,255,255,0.5);
 }
+.Minecraft_Version {
+      color: white;
+    scale: 0.8;
+}
+.Modpack_Version {
+      color: rgb(0, 16, 49);
+    scale: 0.8;
+}
